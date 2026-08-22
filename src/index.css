@@ -1,0 +1,390 @@
+@import "tailwindcss";
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
+
+  --color-background: #0f1418;
+  --color-foreground: #f0f2f5;
+
+  --color-card: #141a1f;
+
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #1f2830;
+  --color-secondary-foreground: #7dd3fc;
+
+  --color-muted: #252e37;
+  --color-muted-foreground: #7a8491;
+
+  --color-border: #242b32;
+
+  --radius: 0.75rem;
+
+  --color-highlight: #60a5fa;
+  --color-surface: #1a2329;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: "Inter", sans-serif;
+  }
+
+  .font-serif {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer components {
+  .glass {
+    background-color: color-mix(in srgb, var(--color-surface) 50%, transparent);
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+  }
+
+  .glass-strong {
+    background-color: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    backdrop-filter: blur(24px);
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 30px
+      color-mix(in srgb, var(--color-primary) 50%, transparent);
+  }
+
+  .glow-border {
+    box-shadow: 0 0 20px
+        color-mix(in srgb, var(--color-primary) 20%, transparent),
+      inset 0 0 20px color-mix(in srgb, var(--color-primary) 5%, transparent);
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes slow-drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(20px, -30px);
+    }
+    50% {
+      transform: translate(-15px, -20px);
+    }
+    75% {
+      transform: translate(30px, 10px);
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Software icons orbiting around a center point */
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes orbit-counter {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.8s ease-out both;
+  }
+
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-orbit {
+      animation: none !important;
+      transform: rotate(var(--orbit-angle, 0deg));
+    }
+    .animate-orbit-counter {
+      animation: none !important;
+      transform: rotate(calc(var(--orbit-angle, 0deg) * -1));
+    }
+  }
+
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 800ms;
+  }
+
+  @keyframes animated-border {
+    0% {
+      stroke-dashoffset: 400;
+    }
+    100% {
+      stroke-dashoffset: -550;
+    }
+  }
+
+  .group:hover .animated-border-path {
+    animation: animated-border 1.5s linear infinite;
+  }
+
+  .animated-border:hover {
+    background-color: color-mix(in srgb, #38bdf8 15%, transparent);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 0 20px color-mix(in srgb, #38bdf8 20%, transparent);
+  }
+
+  .timeline-glow {
+    box-shadow: 0 0 40px
+        color-mix(in srgb, var(--color-primary) 35%, transparent),
+      0 0 80px color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}
+
+@keyframes loading-orbit {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes loading-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loading-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-screen {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #081116;
+  color: #f0f2f5;
+  transition: opacity 550ms ease, visibility 550ms ease;
+}
+
+
+.loading-screen--leaving {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-screen__grain,
+.loading-screen__grid,
+.loading-screen__orb {
+  position: absolute;
+  pointer-events: none;
+}
+
+.loading-screen__grain {
+  inset: 0;
+  opacity: 0.13;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+}
+
+.loading-screen__grid {
+  inset: -25%;
+  background-image: linear-gradient(rgba(125, 211, 252, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(125, 211, 252, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: perspective(500px) rotateX(62deg) translateY(-4%);
+  mask-image: linear-gradient(to bottom, transparent 3%, black 50%, transparent 90%);
+}
+
+.loading-screen__orb {
+  width: min(55vw, 760px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: loading-orbit 15s ease-in-out infinite;
+}
+
+.loading-screen__orb--one {
+  top: -30%;
+  right: -12%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.26), transparent 67%);
+}
+
+.loading-screen__orb--two {
+  bottom: -42%;
+  left: -15%;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.19), transparent 67%);
+  animation-delay: -7s;
+}
+
+.loading-screen__content {
+  position: relative;
+  width: min(100% - 3rem, 640px);
+}
+
+.loading-screen__eyebrow,
+.loading-screen__message,
+.loading-screen__footer {
+  letter-spacing: 0.16em;
+}
+
+.loading-screen__eyebrow {
+  margin: 0 0 1.35rem;
+  color: #7dd3fc;
+  font-size: 0.68rem;
+  font-weight: 700;
+  animation: loading-fade-up 700ms 120ms both;
+}
+
+.loading-screen__title-wrap {
+  display: grid;
+  overflow: hidden;
+  font-size: clamp(4rem, 15vw, 8rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.08em;
+}
+
+.loading-screen__title {
+  animation: loading-reveal 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.loading-screen__title--accent {
+  color: #7dd3fc;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  animation-delay: 110ms;
+}
+
+.loading-screen__message {
+  margin: 1.8rem 0 1.2rem;
+  color: #aab7c1;
+  font-size: 0.7rem;
+  animation: loading-fade-up 700ms 400ms both;
+}
+
+.loading-screen__progress {
+  height: 2px;
+  overflow: hidden;
+  background: rgba(240, 242, 245, 0.18);
+}
+
+.loading-screen__progress-fill {
+  width: 100%;
+  height: 100%;
+  transform-origin: left;
+  background: linear-gradient(90deg, #38bdf8, #d4f3ff);
+  box-shadow: 0 0 14px #38bdf8;
+  transition: transform 80ms linear;
+}
+
+.loading-screen__footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  color: #7a8491;
+  font-size: 0.58rem;
+  font-weight: 700;
+  animation: loading-fade-up 700ms 500ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen *,
+  .loading-screen {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}
