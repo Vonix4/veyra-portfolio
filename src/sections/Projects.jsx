@@ -18,7 +18,7 @@ const projects = [
     description:
       "A fast-cut creator montage built around a strong opening hook and a satisfying visual payoff.",
     category: "Creator Reel",
-    tools: ["Premiere Pro", "Captions", "Sound Design"],
+    tools: ["premiere pro", "Captions", "Sound Design"],
     gradient: "from-sky-500/45 via-blue-950/50 to-slate-950",
     video: behindTheLensVideo,
   },
@@ -98,14 +98,14 @@ export const Projects = () => {
           if (!video) return;
 
           if (entry.isIntersecting) {
-            // Videos automatically play silently.
+            // Start the video silently when it enters the viewport.
             video.muted = true;
 
             video.play().catch(() => {
-              // Some mobile browsers may block autoplay.
+              // Mobile browsers may still block autoplay.
             });
           } else {
-            // Stop videos when they leave the viewport.
+            // Stop videos that leave the viewport.
             video.pause();
             video.muted = true;
 
@@ -121,7 +121,9 @@ export const Projects = () => {
     );
 
     cardRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
+      if (card) {
+        observer.observe(card);
+      }
     });
 
     document.addEventListener(
@@ -139,19 +141,19 @@ export const Projects = () => {
     };
   }, [activeVideo]);
 
-  const toggleSound = async (index) => {
+  const toggleSound = (index) => {
     const selectedVideo = videoRefs.current[index];
 
     if (!selectedVideo) return;
 
-    // Clicking the active video button mutes it.
+    // If this video is already active, mute it.
     if (activeVideo === index) {
       selectedVideo.muted = true;
       setActiveVideo(null);
       return;
     }
 
-    // Mute every other video.
+    // Mute all other videos.
     videoRefs.current.forEach((video, videoIndex) => {
       if (!video) return;
 
@@ -160,24 +162,14 @@ export const Projects = () => {
       }
     });
 
-    try {
-      // IMPORTANT:
-      // The sound change happens directly from the user's click.
-      selectedVideo.muted = false;
-      selectedVideo.volume = 1;
+    // Enable sound for the selected video.
+    selectedVideo.muted = false;
+    selectedVideo.volume = 1;
 
-      await selectedVideo.play();
+    // Play after the user's tap/click.
+    selectedVideo.play().catch(() => {});
 
-      setActiveVideo(index);
-    } catch (error) {
-      // If playback with sound is rejected by the browser,
-      // keep the video muted.
-      selectedVideo.muted = true;
-
-      console.warn("Video playback with sound was blocked:", error);
-
-      setActiveVideo(null);
-    }
+    setActiveVideo(index);
   };
 
   return (
@@ -185,7 +177,6 @@ export const Projects = () => {
       id="projects"
       className="py-32 relative overflow-hidden"
     >
-      {/* Background effects */}
       <div className="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
 
       <div className="absolute bottom-1/4 left-0 w-64 h-64 bg-highlight/5 rounded-full blur-3xl" />
@@ -211,7 +202,7 @@ export const Projects = () => {
           </p>
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
 
           {projects.map((project, idx) => (
@@ -235,33 +226,27 @@ export const Projects = () => {
                   <video
                     ref={(video) => {
                       videoRefs.current[idx] = video;
-
-                      // Start every video muted.
-                      if (video) {
-                        video.muted = true;
-                      }
                     }}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     src={project.video}
                     loop
+                    muted={activeVideo !== idx}
                     playsInline
                     preload="none"
                     aria-label={`${project.title} video preview`}
                   />
                 )}
 
-                {/* Visual overlay */}
+                {/* Video Overlay */}
                 <div className="absolute inset-0 opacity-35 bg-[radial-gradient(circle_at_72%_24%,#7dd3fc_0,transparent_26%),linear-gradient(115deg,transparent_0,transparent_48%,rgba(255,255,255,.16)_49%,transparent_50%)]" />
 
                 {/* Sound Button */}
                 <div className="absolute top-6 right-6 flex justify-end">
                   <button
                     type="button"
-                    onClick={() => {
-                      if (project.video) {
-                        toggleSound(idx);
-                      }
-                    }}
+                    onClick={() =>
+                      project.video && toggleSound(idx)
+                    }
                     aria-label={
                       activeVideo === idx
                         ? `Mute ${project.title}`
