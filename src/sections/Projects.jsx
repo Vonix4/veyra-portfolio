@@ -74,6 +74,11 @@ export const Projects = () => {
 
   const videoRefs = useRef([]);
   const cardRefs = useRef([]);
+  const activeVideoRef = useRef(null);
+
+  useEffect(() => {
+    activeVideoRef.current = activeVideo;
+  }, [activeVideo]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -109,7 +114,7 @@ export const Projects = () => {
             video.pause();
             video.muted = true;
 
-            if (activeVideo === index) {
+            if (activeVideoRef.current === index) {
               setActiveVideo(null);
             }
           }
@@ -139,7 +144,7 @@ export const Projects = () => {
         handleVisibilityChange
       );
     };
-  }, [activeVideo]);
+  }, []);
 
   const toggleSound = (index) => {
     const selectedVideo = videoRefs.current[index];

@@ -2,9 +2,9 @@ import { Instagram } from "lucide-react";
 import { FaTelegram, FaTiktok } from "react-icons/fa6";
 
 const socialLinks = [
-  { icon: FaTiktok, href: "#", label: "TikTok" },
-  { icon: FaTelegram, href: "#", label: "Telegram" },
-  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: FaTiktok, href: "https://www.tiktok.com/@veyra.proff?is_from_webapp=1&sender_device=pc", label: "TikTok" },
+  { icon: FaTelegram, href: "https://t.me/Benayass_G", label: "Telegram" },
+  { icon: Instagram, href: "https://www.instagram.com/veyra_proff?igsh=MW4wMWVoaXU4aGI0aA==", label: "Instagram" },
 ];
 
 const footerLinks = [

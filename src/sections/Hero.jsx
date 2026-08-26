@@ -16,7 +16,7 @@ import illustratorIcon from "@/assets/Adobe_Illustrator_CC_icon.svg";
 const skills = [
   "Adobe Premiere Pro",
   "After Effects",
-  "DaVinci Resolve",
+  "DaVinci Resolve",  
   "CapCut",
   "Adobr Photoshop",
   
